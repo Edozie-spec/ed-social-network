@@ -1,0 +1,20 @@
+{
+  "short_name": "ED",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "image_4d2daf97.png",
+      "type": "image/png",
+      "sizes": "1408x768"
+    },
+    {
+      "src": "image_4d2daf97.png",
+      "type": "image/png",
+      "sizes": "1408x768"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

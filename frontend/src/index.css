@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .dark .card {
+    background-color: theme('colors.sky.900');
+    color: theme('colors.blueGray.100');
+  }
+}
