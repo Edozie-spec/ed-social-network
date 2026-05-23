@@ -17,13 +17,29 @@ const postSchema=mongoose.Schema(
         likes:[{
             type: mongoose.Schema.Types.ObjectId,
             ref:'User',
+        }],
+        reactions:[{
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            type: {
+                type: String,
+                enum: ['heart', 'laugh', 'fire', 'wow', 'sad'],
+                default: 'heart'
+            }
+        }],
+        poll: {
+            question: { type: String, default: '' },
+            options: [{
+                text: { type: String, required: true },
+                votes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+            }]
         },
-    ],
-    comments:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Comment'
-    },
-],
+        comments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'Comment'
+        }],
     },
     {timestamps:true}
 );

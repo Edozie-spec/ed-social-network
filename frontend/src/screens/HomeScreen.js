@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import PostCard from '../components/PostCard';
 import CreatePost from '../components/CreatePost';
+import StoriesBar from '../components/StoriesBar';
 import { Store } from '../context/Store';
 
 export default function HomeScreen() {
@@ -14,7 +15,7 @@ export default function HomeScreen() {
   const fetchAllPosts = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('http://127.0.0.1:5002/api/posts');
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}/api/posts`);
       setPosts(data);
     } catch (err) {
       console.error('Error fetching all posts:', err);
@@ -27,7 +28,7 @@ export default function HomeScreen() {
     setLoading(true);
     try {
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-      const { data } = await axios.get('http://127.0.0.1:5002/api/posts/following', config);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}/api/posts/following`, config);
       setPosts(data);
     } catch (err) {
       console.error('Error fetching following posts:', err);
@@ -57,15 +58,16 @@ export default function HomeScreen() {
 
   return (
     <div>
+      <StoriesBar />
       {userInfo && <CreatePost onPostCreated={handlePostCreated} />}
 
-      <div className="flex space-x-4 mb-6">
+      <div className="flex space-x-4 mb-8 justify-center">
         <button
           onClick={() => setFeedType('all')}
-          className={`px-4 py-2 rounded transition-colors ${
+          className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
             feedType === 'all'
-              ? 'bg-indigo-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+              ? 'bg-gradient-to-r from-brand-purple to-brand-pink text-white shadow-lg scale-105'
+              : 'glass-panel text-gray-800 dark:text-gray-200 hover:bg-white/80 dark:hover:bg-slate-800/80'
           }`}
         >
           All Posts
@@ -73,10 +75,10 @@ export default function HomeScreen() {
         {userInfo && (
           <button
             onClick={() => setFeedType('following')}
-            className={`px-4 py-2 rounded transition-colors ${
+            className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${
               feedType === 'following'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                ? 'bg-gradient-to-r from-brand-purple to-brand-pink text-white shadow-lg scale-105'
+                : 'glass-panel text-gray-800 dark:text-gray-200 hover:bg-white/80 dark:hover:bg-slate-800/80'
             }`}
           >
             Following

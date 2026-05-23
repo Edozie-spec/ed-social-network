@@ -82,25 +82,6 @@ router.get('/search', async (req, res) => {
   }
 });
 
-router.get('/search', async (req, res) => {
-  try {
-    const keyword = req.query.keyword
-      ? {
-          name: {
-            $regex: req.query.keyword,
-            $options: 'i',
-          },
-        }
-      : {};
-
-    const users = await User.find({ ...keyword }).select('name avatar bio');
-    res.json(users);
-  } catch (error) {
-    console.error('SEARCH ERROR:', error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
 router.get('/profile/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id)

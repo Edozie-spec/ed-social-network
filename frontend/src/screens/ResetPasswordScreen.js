@@ -18,7 +18,7 @@ export default function ResetPasswordScreen() {
     }
     try {
       const { data } = await axios.put(
-        `http://127.0.0.1:5002/api/users/reset-password/${token}`,
+        `${process.env.REACT_APP_API_URL || (process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}`)}/api/users/reset-password/${token}`,
         { newPassword }
       );
       setMessage(data.message);
@@ -30,38 +30,43 @@ export default function ResetPasswordScreen() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white dark:bg-sky-900 rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-4">Reset Password</h1>
-      {message && <div className="bg-green-100 text-green-700 p-2 rounded mb-3">{message}</div>}
-      {error && <div className="bg-red-100 text-red-700 p-2 rounded mb-3">{error}</div>}
-      <form onSubmit={submitHandler}>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">New Password</label>
-          <input
-            type="password"
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-sky-800 dark:border-sky-700 dark:text-white"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Confirm Password</label>
-          <input
-            type="password"
-            className="w-full border p-2 rounded bg-gray-50 dark:bg-sky-800 dark:border-sky-700 dark:text-white"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
-          Reset Password
-        </button>
-      </form>
-      <p className="mt-4 text-center">
-        <Link to="/login" className="text-indigo-600 hover:underline">Back to Sign In</Link>
-      </p>
+    <div className="max-w-md mx-auto mt-10">
+      <div className="glass-panel rounded-3xl p-8">
+        <h1 className="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-purple">Reset Password</h1>
+        {message && <div className="bg-green-500/20 text-green-400 p-3 rounded-2xl mb-4 text-sm">{message}</div>}
+        {error && <div className="bg-red-500/20 text-red-400 p-3 rounded-2xl mb-4 text-sm">{error}</div>}
+        <form onSubmit={submitHandler}>
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1">New Password</label>
+            <input
+              type="password"
+              className="w-full border border-gray-200 dark:border-slate-700 p-3 px-4 rounded-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-purple transition-all"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">Confirm Password</label>
+            <input
+              type="password"
+              className="w-full border border-gray-200 dark:border-slate-700 p-3 px-4 rounded-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-purple transition-all"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-brand-purple to-brand-pink text-white font-bold py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all"
+          >
+            Reset Password
+          </button>
+        </form>
+        <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
+          <Link to="/login" className="text-brand-purple font-semibold hover:underline">Back to Sign In</Link>
+        </p>
+      </div>
     </div>
   );
 }

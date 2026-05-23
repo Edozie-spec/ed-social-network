@@ -1,20 +1,55 @@
 {
-  "short_name": "ED",
-  "name": "Create React App Sample",
+  "short_name": "ED App",
+  "name": "ED Social Network - Extreme PWA",
+  "description": "A fully featured social network Progressive Web App with offline capabilities and advanced caching.",
+  "categories": ["social", "networking", "lifestyle"],
   "icons": [
     {
       "src": "image_4d2daf97.png",
       "type": "image/png",
-      "sizes": "1408x768"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "image_4d2daf97.png",
       "type": "image/png",
-      "sizes": "1408x768"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display_override": ["window-controls-overlay", "minimal-ui"],
+  "theme_color": "#0ea5e9",
+  "background_color": "#f8fafc",
+  "shortcuts": [
+    {
+      "name": "Create Post",
+      "short_name": "Post",
+      "description": "Share a new update with your followers",
+      "url": "/",
+      "icons": [{ "src": "image_4d2daf97.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Search Users",
+      "short_name": "Search",
+      "description": "Find people on ED",
+      "url": "/search",
+      "icons": [{ "src": "image_4d2daf97.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "image_4d2daf97.png",
+      "sizes": "1408x768",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "image_4d2daf97.png",
+      "sizes": "1408x768",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }

@@ -1,0 +1,72 @@
+# Extreme PWA App Implementation Plan
+
+We will transform the existing React frontend into an "Extreme Progressive Web App (PWA)" with advanced capabilities. This goes far beyond the basic installation by adding features like offline support, background synchronization, custom caching strategies, and a rich, app-like installation experience.
+
+## User Review Required
+
+> [!IMPORTANT]
+> Since creating a custom Service Worker in Create React App (CRA) usually requires specific dependencies and files, I'll be adding the Workbox suite of libraries.
+> Please review the features below and let me know if there's any specific PWA capability you'd like to prioritize (e.g., Push Notifications, which require significant backend updates).
+
+## Open Questions
+
+> [!WARNING]
+> Push Notifications require adding VAPID keys, changing the backend to store user subscriptions, and setting up `web-push`. Do you want me to include Push Notifications in this update, or should we stick to advanced caching, background sync, and installation features for now?
+
+## Proposed Changes
+
+### 1. Frontend Dependencies
+We will install the Workbox libraries to power our advanced Service Worker.
+- Install `workbox-core`, `workbox-expiration`, `workbox-precaching`, `workbox-routing`, `workbox-strategies`, and `workbox-background-sync` via npm.
+
+---
+
+### 2. PWA Configuration & Metadata
+
+#### [MODIFY] `frontend/public/manifest.json`
+- Expand to an "extreme" manifest with `shortcuts` (e.g., direct links to "New Post", "Search"), `description`, `categories`, and `display_override`.
+- Ensure high-quality icons and screenshot definitions for better install prompts.
+
+#### [MODIFY] `frontend/public/index.html`
+- Add iOS-specific meta tags (`apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`).
+- Add a theme color meta tag to match the dark/light mode setup.
+
+---
+
+### 3. Service Worker Implementation
+
+#### [NEW] `frontend/src/service-worker.js`
+- Create a custom Workbox-powered service worker.
+- **Pre-caching**: Automatically cache all static assets compiled by CRA.
+- **Runtime Caching**:
+  - `NetworkFirst` strategy for our API endpoints (e.g., fetching posts).
+  - `CacheFirst` for images and avatars (with expiration).
+- **Background Sync**: Allow users to write posts or like posts while offline. The service worker will queue these requests and send them to the backend when the connection is restored.
+- **Offline Fallback**: Serve a cached response if a network request fails and the user is entirely offline.
+
+#### [NEW] `frontend/src/serviceWorkerRegistration.js`
+- Include the standard CRA service worker registration script with added hooks to notify the React app when an update is available or when the app is installed.
+
+#### [MODIFY] `frontend/src/index.js`
+- Import and call `serviceWorkerRegistration.register()` to enable the Service Worker.
+
+---
+
+### 4. UI/UX Enhancements for PWA
+
+#### [NEW] `frontend/src/components/OfflineIndicator.js`
+- A floating banner that appears when the user loses network connectivity.
+
+#### [MODIFY] `frontend/src/App.js`
+- Integrate `OfflineIndicator`.
+- Add a custom "Install App" button or prompt that appears dynamically if the app hasn't been installed yet, making the experience feel premium.
+
+## Verification Plan
+
+### Automated/Local Tests
+- Build the frontend (`npm run build`) and serve it locally (using `serve` or similar) to ensure the service worker registers properly, as CRA only enables SW in production builds by default.
+- Use Chrome DevTools (Application tab) to verify the Service Worker, Manifest, and Background Sync queue.
+
+### Manual Verification
+- Simulate offline mode in Chrome DevTools to verify that the app still loads and displays cached posts.
+- Create a post while offline and observe the Background Sync queue, then reconnect to the network to see the post automatically sync.

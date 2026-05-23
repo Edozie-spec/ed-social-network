@@ -12,7 +12,7 @@ export default function CommentItem({ comment, postId, onDelete }) {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       };
       await axios.delete(
-        `http://127.0.0.1:5002/api/posts/${postId}/comments/${comment._id}`,
+        `${process.env.REACT_APP_API_URL || (process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}`)}/api/posts/${postId}/comments/${comment._id}`,
         config
       );
       onDelete(comment._id);
@@ -22,7 +22,7 @@ export default function CommentItem({ comment, postId, onDelete }) {
   };
 
   return (
-    <div className="flex items-start space-x-3 py-2 border-b last:border-0">
+    <div className="flex items-start space-x-3 py-3 border-b border-gray-200/30 dark:border-slate-700/30 last:border-0">
       <img
         src={comment.user?.avatar || 'https://via.placeholder.com/32'}
         alt=""
@@ -30,10 +30,10 @@ export default function CommentItem({ comment, postId, onDelete }) {
       />
       <div className="flex-1">
         <p className="text-sm font-semibold">{comment.user?.name}</p>
-        <p className="text-gray-700">{comment.text}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm">{comment.text}</p>
       </div>
       {userInfo && comment.user?._id === userInfo._id && (
-        <button onClick={handleDelete} className="text-red-500 text-sm">
+        <button onClick={handleDelete} className="text-red-400 text-sm hover:underline">
           Delete
         </button>
       )}

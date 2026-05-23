@@ -13,7 +13,7 @@ export default function PostDetailScreen() {
 
   const fetchPost = async () => {
     try {
-      const { data } = await axios.get(`http://127.0.0.1:5002/api/posts/${id}`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL || (process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}`)}/api/posts/${id}`);
       setPost(data);
     } catch (err) {
       console.error(err);
@@ -32,7 +32,7 @@ export default function PostDetailScreen() {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       };
       const { data } = await axios.post(
-        `http://127.0.0.1:5002/api/posts/${id}/comments`,
+        `${process.env.REACT_APP_API_URL || (process.env.REACT_APP_API_URL || `${process.env.REACT_APP_API_URL || 'http://10.45.224.225:5520'}`)}/api/posts/${id}/comments`,
         { text: commentText },
         config
       );
@@ -50,13 +50,13 @@ export default function PostDetailScreen() {
     });
   };
 
-  if (!post) return <div>Loading...</div>;
+  if (!post) return <div className="text-center py-8 text-gray-400">Loading...</div>;
 
   return (
     <div className="max-w-2xl mx-auto">
-      <Link to="/" className="text-indigo-600 hover:underline mb-4 block">← Back</Link>
-      <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <div className="flex items-center mb-3">
+      <Link to="/" className="text-brand-purple hover:underline mb-4 block font-semibold">← Back</Link>
+      <div className="glass-panel rounded-3xl p-6 mb-6">
+        <div className="flex items-center mb-4">
           <img
             src={post.user?.avatar || 'https://via.placeholder.com/40'}
             alt=""
@@ -66,20 +66,20 @@ export default function PostDetailScreen() {
             <Link to={`/profile/${post.user?._id}`} className="font-semibold hover:underline">
               {post.user?.name}
             </Link>
-            <p className="text-gray-500 text-sm">{new Date(post.createdAt).toLocaleString()}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">{new Date(post.createdAt).toLocaleString()}</p>
           </div>
         </div>
-        <p className="text-gray-800 mb-3">{post.content}</p>
+        <p className="text-gray-800 dark:text-gray-100 mb-3">{post.content}</p>
         {post.image && (
-          <img src={post.image} alt="" className="w-full max-h-96 object-cover rounded mb-3" />
+          <img src={post.image} alt="" className="w-full max-h-96 object-cover rounded-2xl mb-3" />
         )}
-        <div className="text-gray-600 text-sm">
+        <div className="text-gray-500 dark:text-gray-400 text-sm mt-2">
           {post.likes?.length || 0} likes · {post.comments?.length || 0} comments
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow p-4 mb-4">
-        <h3 className="font-semibold mb-3">Comments</h3>
+      <div className="glass-panel rounded-3xl p-6 mb-6">
+        <h3 className="font-bold mb-4 text-lg">Comments</h3>
         {post.comments && post.comments.length > 0 ? (
           post.comments.map((comment) => (
             <CommentItem
@@ -90,18 +90,21 @@ export default function PostDetailScreen() {
             />
           ))
         ) : (
-          <p className="text-gray-500">No comments yet.</p>
+          <p className="text-gray-500 dark:text-gray-400">No comments yet.</p>
         )}
         {userInfo && (
-          <form onSubmit={handleComment} className="mt-4 flex">
+          <form onSubmit={handleComment} className="mt-4 flex space-x-2">
             <input
               type="text"
-              className="flex-1 border p-2 rounded-l bg-sky-100 dark:bg-sky-800 dark:text-gray-300"
+              className="flex-1 border border-gray-200 dark:border-slate-700 p-3 px-4 rounded-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-purple transition-all"
               placeholder="Write a comment..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
             />
-            <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-r">
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-brand-pink to-brand-orange text-white font-bold px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all"
+            >
               Post
             </button>
           </form>

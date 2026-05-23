@@ -2,9 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-sans antialiased text-gray-900 dark:text-gray-100;
+  }
+}
+
 @layer components {
   .dark .card {
     background-color: theme('colors.sky.900');
     color: theme('colors.blueGray.100');
+  }
+
+  .mesh-bg {
+    background: linear-gradient(-45deg, #ec4899, #8b5cf6, #3b82f6, #06b6d4);
+    background-size: 400% 400%;
+    animation: mesh 15s ease infinite;
+  }
+
+  .dark .mesh-bg {
+    background: linear-gradient(-45deg, #4c1d95, #1e3a8a, #0f172a, #831843);
+    background-size: 400% 400%;
+    animation: mesh 15s ease infinite;
+  }
+  
+  .glass-panel {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-lg;
   }
 }
