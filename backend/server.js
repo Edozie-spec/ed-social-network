@@ -44,8 +44,8 @@ mongoose
   });
 
 const PORT = process.env.PORT || 5002;
-const server = app.listen(PORT, '10.45.224.225', () => {
-  console.log(`Server running at http://10.45.224.225:${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
   console.log(`Also try http://localhost:${PORT}`);
 });
 
