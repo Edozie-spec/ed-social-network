@@ -5,13 +5,13 @@
   "categories": ["social", "networking", "lifestyle"],
   "icons": [
     {
-      "src": "image_4d2daf97.png",
+      "src": "calm_social_icon.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "image_4d2daf97.png",
+      "src": "calm_social_icon.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -28,25 +28,25 @@
       "short_name": "Post",
       "description": "Share a new update with your followers",
       "url": "/",
-      "icons": [{ "src": "image_4d2daf97.png", "sizes": "192x192" }]
+      "icons": [{ "src": "calm_social_icon.png", "sizes": "192x192" }]
     },
     {
       "name": "Search Users",
       "short_name": "Search",
       "description": "Find people on ED",
       "url": "/search",
-      "icons": [{ "src": "image_4d2daf97.png", "sizes": "192x192" }]
+      "icons": [{ "src": "calm_social_icon.png", "sizes": "192x192" }]
     }
   ],
   "screenshots": [
     {
-      "src": "image_4d2daf97.png",
+      "src": "calm_social_icon.png",
       "sizes": "1408x768",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "image_4d2daf97.png",
+      "src": "calm_social_icon.png",
       "sizes": "1408x768",
       "type": "image/png",
       "form_factor": "narrow"
